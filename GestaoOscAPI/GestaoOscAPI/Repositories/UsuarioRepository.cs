@@ -74,6 +74,11 @@ namespace GestaoOscAPI.Repositories
             return usuarios;
         }
 
+        public Usuario? BuscarPorId(int id)
+        {
+            return usuarios.FirstOrDefault(usuario => usuario.Id == id);
+        }
+
         public Usuario? BuscarPorEmail(string email)
         {
             return usuarios.FirstOrDefault(usuario => usuario.Email.Equals(email));

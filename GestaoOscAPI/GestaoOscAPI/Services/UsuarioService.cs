@@ -25,6 +25,16 @@ namespace GestaoOscAPI.Services
             
         }
 
+        public Usuario? BuscarPorId(int id)
+        {
+            return usuarioRepository.BuscarPorId(id);
+        }
+
+        public Usuario? BuscarPorEmail(string email)
+        {
+            return usuarioRepository.BuscarPorEmail(email);
+        }
+
         public List<Usuario> BuscarPorSetor(Setor setor)
         {
             return usuarioRepository.BuscarPorSetor(setor);
