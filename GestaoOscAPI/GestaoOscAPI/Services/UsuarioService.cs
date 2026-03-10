@@ -29,5 +29,10 @@ namespace GestaoOscAPI.Services
         {
             return usuarioRepository.BuscarPorSetor(setor);
         }
+
+        public bool Deletar(int id)
+        {
+            return usuarioRepository.Deletar(id);
+        }
     }
 }

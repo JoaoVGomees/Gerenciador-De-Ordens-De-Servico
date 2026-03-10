@@ -83,5 +83,16 @@ namespace GestaoOscAPI.Repositories
         {
             return usuarios.Where(usuario => usuario.Setor == setor).ToList();
         }
+
+        public bool Deletar(int id)
+        {
+            Usuario? usuario = usuarios.FirstOrDefault(usuario => usuario.Id == id);
+
+            if (usuario == null)
+                return false;
+
+            usuarios.Remove(usuario);
+            return true;
+        }
     }
 }
