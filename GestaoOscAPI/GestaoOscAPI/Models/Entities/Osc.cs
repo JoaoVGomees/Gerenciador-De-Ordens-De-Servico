@@ -1,4 +1,6 @@
-﻿namespace GestaoOscAPI.Models
+﻿using GestaoOscAPI.Models.Enums;
+
+namespace GestaoOscAPI.Models.Entities
 {
     public class Osc
     {

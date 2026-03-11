@@ -1,4 +1,4 @@
-﻿namespace GestaoOscAPI.Models
+﻿namespace GestaoOscAPI.Models.Requests
 {
     public class LoginRequest
     {

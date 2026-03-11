@@ -1,4 +1,5 @@
-﻿using GestaoOscAPI.Models;
+﻿using GestaoOscAPI.Models.Entities;
+using GestaoOscAPI.Models.Requests;
 using GestaoOscAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;

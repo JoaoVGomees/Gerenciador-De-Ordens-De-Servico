@@ -1,5 +1,6 @@
 ﻿using GestaoOscAPI.Repositories;
-using GestaoOscAPI.Models;
+using GestaoOscAPI.Models.Enums;
+using GestaoOscAPI.Models.Entities;
 
 namespace GestaoOscAPI.Services
 {

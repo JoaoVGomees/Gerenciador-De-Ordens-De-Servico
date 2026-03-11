@@ -1,4 +1,4 @@
-﻿using GestaoOscAPI.Models;
+﻿using GestaoOscAPI.Models.Entities;
 
 namespace GestaoOscAPI.Repositories
 {

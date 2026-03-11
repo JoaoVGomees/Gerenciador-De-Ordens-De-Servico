@@ -1,4 +1,4 @@
-﻿namespace GestaoOscAPI.Models
+﻿namespace GestaoOscAPI.Models.Enums
 {
     public enum Setor
     {
