@@ -14,6 +14,22 @@ namespace GestaoOscAPI.Services
             this.usuarioRepository = usuarioRepository;
         }
 
+        public Usuario CriarUsuario(string nome, string email, string senha, PerfilUsuario perfil, Setor setor)
+        {
+            Usuario usuario = new Usuario
+            {
+                Nome = nome,
+                Email = email,
+                Senha = senha,
+                Perfil = perfil,
+                Setor = setor
+
+            };
+
+            usuarioRepository.Adicionar(usuario);
+            return usuario;
+        }
+
 
         public Usuario? ValidarLogin(string email, string senha)
         {

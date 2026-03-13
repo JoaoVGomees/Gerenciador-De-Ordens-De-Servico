@@ -22,7 +22,6 @@ namespace GestaoOscAPI.Services
         {
             Osc osc = new Osc 
             {
-                Id = oscRepository.ListarTodas().Count + 1,
                 Descricao = descricao,
                 Equipamento = equipamento,
                 DataEmissao = DateTime.Now,

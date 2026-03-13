@@ -1,17 +1,13 @@
 ﻿using GestaoOscAPI.Models.Enums;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace GestaoOscAPI.Models.Entities
+namespace GestaoOscAPI.Models.Requests
 {
-    public class Usuario
+    public class CriarUsuarioRequest
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
         public string Nome { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
         public string Senha { get; set; } = string.Empty;
         public PerfilUsuario Perfil { get; set; }
         public Setor Setor { get; set; }
-
     }
 }

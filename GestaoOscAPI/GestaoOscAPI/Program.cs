@@ -1,5 +1,7 @@
-﻿using GestaoOscAPI.Repositories;
+﻿using GestaoOscAPI.Data;
+using GestaoOscAPI.Repositories;
 using GestaoOscAPI.Services;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,10 +16,12 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddCors(); 
 
-builder.Services.AddSingleton<UsuarioRepository>();
-builder.Services.AddSingleton<OscRepository>();
-builder.Services.AddSingleton<UsuarioService>();
-builder.Services.AddSingleton<OscService>();
+builder.Services.AddScoped<UsuarioRepository>();
+builder.Services.AddScoped<OscRepository>();
+builder.Services.AddScoped<UsuarioService>();
+builder.Services.AddScoped<OscService>();
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
 
