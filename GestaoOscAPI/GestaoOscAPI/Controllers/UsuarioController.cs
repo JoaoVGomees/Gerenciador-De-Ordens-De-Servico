@@ -24,37 +24,27 @@ public class UsuarioController : ControllerBase
     public IActionResult Login([FromBody] LoginRequest request)
     {
         Usuario? user = usuarioService.ValidarLogin(request.Email, request.Senha);
-        
         if (user == null)
             return Unauthorized();
-
-        var response = new UsuarioResponse 
-        {
-            Id = user.Id,
-            Nome = user.Nome,
-            Email = user.Email,
-            Perfil = user.Perfil,
-            Setor = user.Setor
-        };
-
-        return Ok(response);
+        return Ok(UsuarioResponse.FromUsuario(user));
     }
 
     [HttpGet("/usuarios")]
     public IActionResult ListarUsuarios()
     {
         var usuarios = usuarioService.ListarTodos();
-        var usuariosResponse = usuarios.Select( u => new UsuarioResponse
-                {
-                    Id = u.Id,
-                    Nome = u.Nome,
-                    Email = u.Email,
-                    Perfil = u.Perfil,
-                    Setor = u.Setor
-                }  
-            ).ToList();
+        var usuariosResponse = usuarios.Select( u => UsuarioResponse.FromUsuario(u)).ToList();
 
         return Ok(usuariosResponse);
+    }
+
+    [HttpPost("/usuarios")]
+    public IActionResult InserirUsuario([FromBody] CriarUsuarioRequest request)
+    {
+        Usuario usuario = usuarioService.CriarUsuario(request.Nome, request.Email, request.Senha, request.Perfil, request.Setor);
+        
+        return Ok(UsuarioResponse.FromUsuario(usuario));
+
     }
 
     [HttpGet("/usuarios/{id}")]
@@ -65,15 +55,7 @@ public class UsuarioController : ControllerBase
         if (usuario == null)
             return NotFound();
 
-        UsuarioResponse usuarioResponse = new UsuarioResponse
-        {
-            Id = usuario.Id,
-            Nome = usuario.Nome,
-            Email = usuario.Email,
-            Perfil = usuario.Perfil,
-            Setor = usuario.Setor
-        };
-        return Ok(usuarioResponse);
+        return Ok(UsuarioResponse.FromUsuario(usuario));
     }
 
     [HttpGet("/usuarios/email")]
@@ -84,15 +66,7 @@ public class UsuarioController : ControllerBase
         if (usuario == null)
             return NotFound();
 
-        UsuarioResponse usuarioResponse = new UsuarioResponse
-        {
-            Id = usuario.Id,
-            Nome = usuario.Nome,
-            Email = usuario.Email,
-            Perfil = usuario.Perfil,
-            Setor = usuario.Setor
-        };
-        return Ok(usuarioResponse);
+        return Ok(UsuarioResponse.FromUsuario(usuario));
     }
 
     [HttpGet("/usuarios/gerentes/{setor}")]
@@ -100,14 +74,7 @@ public class UsuarioController : ControllerBase
     {
         var gerentes = usuarioService.BuscarPorSetor(setor);
 
-        var response = gerentes.Select(u => new UsuarioResponse
-        {
-            Id = u.Id,
-            Nome = u.Nome,
-            Email = u.Email,
-            Perfil = u.Perfil,
-            Setor = u.Setor
-        }).ToList();
+        var response = gerentes.Select(u => UsuarioResponse.FromUsuario(u)).ToList();
 
         return Ok(response);
     }

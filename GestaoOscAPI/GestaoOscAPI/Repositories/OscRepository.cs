@@ -1,53 +1,50 @@
-﻿using GestaoOscAPI.Models.Entities;
+﻿using GestaoOscAPI.Data;
+using GestaoOscAPI.Models.Entities;
 
 namespace GestaoOscAPI.Repositories
 {
     public class OscRepository
     {
-        private List<Osc> oscs;
+        private readonly AppDbContext context;
 
-        public OscRepository()
+        public OscRepository(AppDbContext context)
         {
-            oscs = new List<Osc>();
-        }
-
-        public List<Osc> ListarTodas()
-        {
-            return oscs;
-        }
-
-        public Osc? BuscarPorId(int id)
-        {
-            return oscs.FirstOrDefault(osc => osc.Id == id);
+            this.context = context;
         }
 
         public bool Adicionar(Osc osc)
         {
-            oscs.Add(osc);
+            context.Oscs.Add(osc);
+            context.SaveChanges();
             return true;
+        }
+
+        public List<Osc> ListarTodas()
+        {
+            return context.Oscs.ToList();
+        }
+
+        public Osc? BuscarPorId(int id)
+        {
+            return context.Oscs.FirstOrDefault(osc => osc.Id == id);
         }
 
         public bool Atualizar(Osc osc)
         {
-            var index = oscs.FindIndex(o => o.Id == osc.Id);
-
-            if (index == -1)
-            {
-                return false;
-            }
-
-            oscs[index] = osc;
+            context.Oscs.Update(osc);
+            context.SaveChanges();
             return true;
         }
 
         public bool Deletar(int id)
         {
-            Osc? osc = oscs.FirstOrDefault(osc => osc.Id == id);
+            Osc? osc = context.Oscs.FirstOrDefault(osc => osc.Id == id);
 
             if (osc == null)
                 return false;
 
-            oscs.Remove(osc);
+            context.Oscs.Remove(osc);
+            context.SaveChanges();
             return true;
         }
 

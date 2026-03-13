@@ -1,9 +1,11 @@
 ﻿using GestaoOscAPI.Models.Enums;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GestaoOscAPI.Models.Entities
 {
     public class Osc
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public string Descricao { get; set; } = string.Empty;
         public string Equipamento { get; set; } = string.Empty;
