@@ -1,5 +1,6 @@
 ﻿using GestaoOscAPI.Models.Entities;
 using GestaoOscAPI.Models.Requests;
+using GestaoOscAPI.Models.Responses;
 using GestaoOscAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -22,7 +23,9 @@ public class OscController : ControllerBase
     [HttpGet]
     public IActionResult ListarTodas()
     {
-        return Ok(oscService.ListarTodas());
+        var oscs = oscService.ListarTodas();
+        var oscsResponse = oscs.Select(osc => OscResponse.FromOsc(osc));
+        return Ok(oscsResponse);
     }
 
     [HttpGet("{id}")]
@@ -33,7 +36,7 @@ public class OscController : ControllerBase
         if (osc == null)
             return NotFound();
 
-        return Ok(osc);
+        return Ok(OscResponse.FromOsc(osc));
     }
 
     [HttpPost]
@@ -48,8 +51,8 @@ public class OscController : ControllerBase
             || gerenteProducao == null || usuarioLogado == null)
             return NotFound("Um ou mais usuários não foram encontrados.");
 
-        Osc osc = oscService.CriarOsc(request.descricao, request.Equipamento, gerenteQualidade, gerenteEngenharia, gerenteProducao, usuarioLogado);
-        return Ok(osc);
+        Osc osc = oscService.CriarOsc(request.Descricao, request.Equipamento, gerenteQualidade, gerenteEngenharia, gerenteProducao, usuarioLogado);
+        return Ok(OscResponse.FromOsc(osc));
 
     }
 
@@ -61,7 +64,7 @@ public class OscController : ControllerBase
         if (osc == null)
             return NotFound();
 
-        osc.Descricao = request.descricao;
+        osc.Descricao = request.Descricao;
         osc.Equipamento = request.Equipamento;
 
         if (request.GerenteQualidadeId > 0)
@@ -73,7 +76,19 @@ public class OscController : ControllerBase
 
 
         oscService.Atualizar(osc);
-        return Ok(osc);
+        return Ok(OscResponse.FromOsc(osc));
+    }
+
+    [HttpPost("{id}/assinar")]
+    public IActionResult AssinarOsc(int id, [FromBody] int usuarioId)
+    {
+        bool resultado = oscService.AssinarOSC(id, usuarioId);
+
+        if (!resultado)
+            return Unauthorized();
+
+        return Ok();
+
     }
 
     [HttpPut("{id}/cancelar")]
@@ -85,7 +100,7 @@ public class OscController : ControllerBase
             return NotFound();
 
         if (oscService.Cancelar(id))
-            return Ok(osc);
+            return Ok(OscResponse.FromOsc(osc));
 
         return NotFound();
     }
@@ -99,7 +114,7 @@ public class OscController : ControllerBase
             return NotFound();
 
         if (oscService.Deletar(id))
-            return Ok(osc);
+            return Ok(OscResponse.FromOsc(osc));
 
         return NotFound();
     }
