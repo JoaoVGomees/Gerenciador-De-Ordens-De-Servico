@@ -9,5 +9,6 @@ namespace GestaoOscAPI.Models.Requests
         public string Senha { get; set; } = string.Empty;
         public PerfilUsuario Perfil { get; set; }
         public Setor Setor { get; set; }
+        public int AdminId { get; set; }
     }
 }

@@ -14,20 +14,28 @@ namespace GestaoOscAPI.Services
             this.usuarioRepository = usuarioRepository;
         }
 
-        public Usuario CriarUsuario(string nome, string email, string senha, PerfilUsuario perfil, Setor setor)
+        public Usuario? CriarUsuario(string nome, string email, string senha, PerfilUsuario perfil, Setor setor, int adminId)
         {
-            Usuario usuario = new Usuario
+            Usuario ? admin = usuarioRepository.BuscarPorId(adminId);
+
+            if (admin != null && admin.Perfil == PerfilUsuario.Administrador)
             {
-                Nome = nome,
-                Email = email,
-                Senha = senha,
-                Perfil = perfil,
-                Setor = setor
+                Usuario usuario = new Usuario
+                {
+                    Nome = nome,
+                    Email = email,
+                    Senha = senha,
+                    Perfil = perfil,
+                    Setor = setor
 
-            };
+                };
 
-            usuarioRepository.Adicionar(usuario);
-            return usuario;
+                usuarioRepository.Adicionar(usuario);
+                return usuario;
+            }
+
+            return null;
+
         }
 
 

@@ -73,7 +73,10 @@ public class UsuarioController : ControllerBase
     [HttpPost("/usuarios")]
     public IActionResult InserirUsuario([FromBody] CriarUsuarioRequest request)
     {
-        Usuario usuario = usuarioService.CriarUsuario(request.Nome, request.Email, request.Senha, request.Perfil, request.Setor);
+        Usuario? usuario = usuarioService.CriarUsuario(request.Nome, request.Email, request.Senha, request.Perfil, request.Setor, request.AdminId);
+
+        if (usuario == null)
+            return Unauthorized();
 
         return Ok(UsuarioResponse.FromUsuario(usuario));
 
