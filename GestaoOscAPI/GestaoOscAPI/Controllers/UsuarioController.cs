@@ -108,7 +108,10 @@ public class UsuarioController : ControllerBase
 
         usuario.Nome = request.Nome;
         usuario.Email = request.Email;
-        usuario.Senha = request.Senha;
+
+        if (!string.IsNullOrWhiteSpace(request.Senha))
+            usuario.Senha = BCrypt.Net.BCrypt.HashPassword(request.Senha);
+
         usuario.Perfil = request.Perfil;
         usuario.Setor = request.Setor;
 
