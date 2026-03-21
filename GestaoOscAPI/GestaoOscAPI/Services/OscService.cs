@@ -68,7 +68,7 @@ namespace GestaoOscAPI.Services
                 return false;
             if (osc == null)
                 return false;
-            if (!osc.QualidadeAssinou || !osc.EngenhariaAssinou || !osc.ProducaoAssinou)
+            if (osc.Status != StatusOsc.AguardandoValidacao)
                 return false;
 
             osc.Status = StatusOsc.Concluida;
@@ -82,8 +82,9 @@ namespace GestaoOscAPI.Services
 
             if (usuario == null || usuario.Perfil != PerfilUsuario.Administrador)
                 return false;
-
             if (osc == null)
+                return false;
+            if (osc.Status == StatusOsc.Concluida)
                 return false;
 
             osc.Status = StatusOsc.Cancelada;
@@ -98,6 +99,8 @@ namespace GestaoOscAPI.Services
             Usuario? usuario = usuarioService.BuscarPorId(usuarioId);
 
             if (osc == null || usuario == null)
+                return false;
+            if (osc.Status != StatusOsc.AguardandoAssinaturas)
                 return false;
 
             if (usuario.Setor == Setor.Qualidade && !osc.QualidadeAssinou)
