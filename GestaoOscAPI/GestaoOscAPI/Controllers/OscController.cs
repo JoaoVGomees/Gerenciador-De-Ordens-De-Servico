@@ -119,7 +119,7 @@ public class OscController : ControllerBase
             return NotFound();
 
         if (oscService.Deletar(id))
-            return Ok(OscResponse.FromOsc(osc));
+            return Ok();
 
         return NotFound();
     }

@@ -128,7 +128,8 @@ public class UsuarioController : ControllerBase
         if (usuario == null) 
             return NotFound();
 
-        return Ok(usuarioService.Deletar(id));
+        usuarioService.Deletar(id);
+        return Ok();
 
     }
 }
